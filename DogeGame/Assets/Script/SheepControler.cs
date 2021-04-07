@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class SheepControler : MonoBehaviour
@@ -18,7 +19,15 @@ public class SheepControler : MonoBehaviour
     }
     
     private void OnTriggerEnter2D(Collider2D other) {
-        print(other.gameObject);
+        PauseGame();
+    }
+    void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+    void ResumeGame()
+    {
+        SceneManager.LoadSceneAsync(0);
     }
 
     // Update is called once per frame
@@ -29,5 +38,9 @@ public class SheepControler : MonoBehaviour
            mousePos = new Vector3(Mathf.Clamp(mousePos.x, minX, maxX), Mathf.Clamp(mousePos.y, minY, maxY), 0);
         }
         transform.position = Vector3.Lerp(transform.position, mousePos, moveSpeed*Time.deltaTime);
+        if (Input.GetMouseButtonDown(1))
+        {
+            ResumeGame();
+        }
     }
 }
